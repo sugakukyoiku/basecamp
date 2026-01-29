@@ -1,0 +1,80 @@
+{{- /* リンク先のパスを取得 */ -}}
+{{- $path := .Get "link" | default (.Get "url") -}}
+{{- $page := .Site.GetPage $path -}}
+
+{{- if $page -}}
+    <article class="mycard-container" style="
+        display: flex;
+        flex-direction: column; /* ★ここが重要：横並びじゃなくて「縦並び」にする */
+        background: var(--card-background, #fff);
+        border: 1px solid var(--card-border, #eee);
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        overflow: hidden;
+        margin: 30px 0;
+        height: auto; /* 高さは中身に合わせて伸びるように */
+        text-decoration: none;
+    ">
+        
+        {{- /* ▼▼▼ 画像エリア（上部） ▼▼▼ */ -}}
+        {{- $image := .Get "image" | default $page.Params.image -}}
+        
+        {{- if $image -}}
+            {{- /* 自動修復: 画像パスの先頭に / がなければ付ける */ -}}
+            {{- if not (hasPrefix $image "/") -}}
+                {{- $image = printf "/%s" $image -}}
+            {{- end -}}
+
+            <div class="mycard-image" style='
+                width: 100%;    /* 横幅いっぱい */
+                height: 30px;  /* ★画像の高さ（好きな高さに変えてOK） */
+                flex-shrink: 0;
+            '>
+                <a href="{{ $page.RelPermalink }}" style="display: block; width: 100%; height: 100%;">
+                    <img src="{{ $image }}" loading="lazy" style="
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        object-position: center; /* 画像の真ん中を使う */
+                        margin: 0;
+                    ">
+                </a>
+            </div>
+        {{- end -}}
+
+        {{- /* ▼▼▼ テキストエリア（下部） ▼▼▼ */ -}}
+        <div class="mycard-details" style="padding: 20px; display: flex; flex-direction: column;">
+            
+            {{- /* タイトル */ -}}
+            {{- /* border-left: none !important; で青いバーを強制削除しています */ -}}
+            <h3 style="
+                margin: 0 0 10px 0; 
+                font-size: 1.6rem;       /* ★文字サイズを大きく */
+                font-weight: bold;
+                line-height: 1.4; 
+                color: #333 !important;
+                border-left: none !important; /* 青いバーを消す */
+                padding-left: 0 !important;   /* 左の余白も消す */
+            ">
+                <a href="{{ $page.RelPermalink }}" style="text-decoration: none; color: inherit;">
+                    {{ .Get "title" | default $page.Title }}
+                </a>
+            </h3>
+
+            {{- /* 説明文 */ -}}
+            <div style="
+                font-size: 1.2rem;      /* ★説明文も少し大きく */
+                opacity: 0.8; 
+                color: #555 !important; 
+                line-height: 1.6;
+            ">
+                {{ .Get "description" | default $page.Description | default $page.Summary | plainify }}
+            </div>
+        </div>
+
+    </article>
+{{- else -}}
+    <div style="color: red; padding: 10px; border: 1px dashed red;">
+        リンクが見つかりません: {{ $path }}
+    </div>
+{{- end -}}

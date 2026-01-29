@@ -1,0 +1,60 @@
+{{/* note風のデザイン調整版 */}}
+<div class="toc-container" style="
+    margin: 24px 0;
+    padding: 4px; 
+    border: 1px solid var(--body-text-color); /* 枠線を文字色と同じにして薄くする */
+    border-color: rgba(128, 128, 128, 0.2);   /* ↑を上書きして、薄いグレー（透明度0.2）にする */
+    background-color: rgba(128, 128, 128, 0.03); /* 背景にほんの少し色をつける */
+    border-radius: 8px; /* 角を少し丸く */
+">
+    <details open style="padding: 10px 15px;">
+        <summary style="
+            cursor: pointer;
+            font-weight: bold;
+            outline: none;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--body-text-color);
+            opacity: 0.9;
+        ">
+            <span style="display:flex; align-items:center;">
+                目次
+            </span>
+            <span class="toc-toggle-text" style="font-size: 0.8em; opacity: 0.6;">[close]</span>
+        </summary>
+        
+        <div style="
+            margin-top: 15px;
+            font-size: 0.95em;
+            line-height: 1.8;
+            border-top: 1px dashed rgba(128, 128, 128, 0.2); /* 点線で区切る */
+            padding-top: 10px;
+        ">
+            {{ .Page.TableOfContents }}
+        </div>
+    </details>
+</div>
+
+<style>
+    /* 目次の中身を綺麗にするCSS */
+    .toc-container nav ul { padding-left: 20px; margin: 0; }
+    .toc-container nav ul li { list-style: disc; margin-bottom: 5px; color: var(--body-text-color); }
+    .toc-container nav ul ul { margin-top: 5px; }
+    .toc-container a { text-decoration: none; color: var(--primary); opacity: 0.9; }
+    .toc-container a:hover { text-decoration: underline; opacity: 1; }
+    
+    /* 矢印を消す（モダンブラウザ対応） */
+    details > summary::-webkit-details-marker { display: none; }
+    
+    /* 開閉時の文字切り替え（CSSのみで実現） */
+    details[open] .toc-toggle-text::after { content: ""; }
+    details:not([open]) .toc-toggle-text { visibility: hidden; position: relative; }
+    details:not([open]) .toc-toggle-text::after { 
+        content: "[open]"; 
+        visibility: visible; 
+        position: absolute; 
+        right: 0; 
+    }
+</style>

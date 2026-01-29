@@ -1,0 +1,22 @@
+{{- $updates := site.Data.updates -}}
+{{- if $updates -}}
+<section class="widget-archives widget-card">
+    <div class="widget-title">
+        <h3 class="widget-header">更新履歴・ひとこと</h3>
+    </div>
+    <div class="widget-body">
+        <div class="widget-items-container" style="max-height: 300px; overflow-y: auto;">
+            {{- range first 5 $updates }}
+            <div style="margin-bottom: 10px; font-size: 0.9rem; border-bottom: 1px dashed #eee; padding-bottom: 5px;">
+                <span style="font-weight: bold; color: var(--card-text-color-main); margin-right: 5px;">
+                    {{ .date }}
+                </span>
+                <span style="color: var(--card-text-color-secondary);">
+                    {{ .text | markdownify }}
+                </span>
+            </div>
+            {{- end }}
+        </div>
+    </div>
+</section>
+{{- end -}}
