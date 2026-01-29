@@ -1,4 +1,4 @@
-baseurl: https://example.com/
+baseurl: https://sugakukyoiku.com
 languageCode: "ja"
 theme: hugo-theme-stack
 title: "数学教育のBaseCamp"
@@ -28,7 +28,7 @@ services:
         shortname: "hugo-theme-stack"
     # GA Tracking ID
     googleAnalytics:
-        id:
+        id: G-0LDJ64L9QP
 
 pagination:
     pagerSize: 10
