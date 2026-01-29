@@ -1,7 +1,7 @@
 baseurl: https://sugakukyoiku.com
 languageCode: "ja"
 theme: hugo-theme-stack
-title: "数学教育のBaseCamp"
+title: "数学教育のBaseCamp（β版）"
 copyright: Chinami Sumiyoshi. All rights reserved.
 
 # Theme i18n support
@@ -15,12 +15,12 @@ hasCJKLanguage: false
 languages:
     ja:
         languageName: 日本語
-        title: 数学教育のBaseCamp
+        title: 数学教育のBaseCamp（β版）
         weight: 1
         params:
             math: true
             sidebar:
-                subtitle: "足場の整理整頓"
+                subtitle: "足場の整理整頓/デジタルガーデン"
 
 services:
     # Change it to your Disqus shortname before using
@@ -55,7 +55,7 @@ params:
 
     sidebar:
         emoji: 
-        subtitle: "足場の整理整頓"
+        subtitle: "足場の整理整頓/デジタルガーデン"
         avatar:
             enabled: true
             local: true
