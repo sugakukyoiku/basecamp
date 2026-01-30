@@ -74,20 +74,20 @@ draft: false
     </div>
   - 
     -  [“垂線”]({{< ref "post/suisen.md" >}})  
-    - <div style="color: gray; cursor: not-allowed;">
+    - <span style="color: gray; cursor: not-allowed;">
       “因数分解”（公開予定）
-      </div>
+      </span>
     - 
 
 - 出口
     - [私大の分析不足？]({{< ref "post/shidainobunseki.md" >}})
       - 出題ミスグレーゾーン
-        - <div style="color: gray; cursor: not-allowed;">
+        - <span style="color: gray; cursor: not-allowed;">
           教科書準拠系（公開予定）
-          </div>
-        - <div style="color: gray; cursor: not-allowed;">
+          </span>
+        - <span style="color: gray; cursor: not-allowed;">
           認識不足系（公開予定）
-          </div>
+          </span>
 
 そして，「＋α」は教育的視点のための発達・認知心理学
 - [ことばの輪郭と図形の用語（公開予定）]({{< ref "post/gengorikai.md" >}})
@@ -102,9 +102,7 @@ draft: false
 <div style="color: gray; cursor: not-allowed;">
   　　　数列の一般項の推測（公開予定）
 </div>
-
-<small>
-ちょっと気になっているトピック：
-
-ベクトルの成分の表記，教科書にはあるが入試には出てこない円の接線のベクトル方程式，某順問題は実際何割ぐらいの教師が固定派なのか，教科書で扱う事項や表現の変遷，「無理式」「無理関数」etc.
+</br>
+<small>ちょっと気になっているトピック：</small></br>
+<small>ベクトルの成分の表記，教科書にはあるが入試には出てこない円の接線のベクトル方程式，某順問題は実際何割ぐらいの教師が固定派なのか，教科書で扱う事項や表現の変遷，「無理式」「無理関数」etc.
 </small>
