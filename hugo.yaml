@@ -43,7 +43,7 @@ params:
         - post
     featuredImageField: image
     rssFullContent: true
-    favicon: "/img/avatar3.png"
+    favicon: "/img/avatar3_touka.PNG"
 
     footer:
         since: 2026
