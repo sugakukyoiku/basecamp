@@ -52,4 +52,4 @@ K大の表現は，検定教科書には準拠している．その一方で，�
 
 参考：  
 『[そもそも定義とは]({{< ref "post/teigi.md" >}})』  
-『<span style="color: gray; cursor: not-allowed;">“定義”する気はない？</span>』
+『[“定義”する気はない？]({{< ref "post/teigisuruki.md" >}})』

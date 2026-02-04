@@ -52,9 +52,7 @@ draft: false
 
 - 入口
   - [そもそも定義とは]({{< ref "post/teigi.md" >}})
-  - <div style="color: gray; cursor: not-allowed;">
-      “定義”する気はない？（公開予定）
-    </div>
+  - [“定義”する気はない？]({{< ref "post/teigisuruki.md" >}})
   - 定義が複数ある用語
     - <div style="color: gray; cursor: not-allowed;">
       積分（公開予定）
@@ -90,7 +88,7 @@ draft: false
           </span>
 
 そして，「＋α」は教育的視点のための発達・認知心理学
-- [ことばの輪郭と図形の用語（公開予定）]({{< ref "post/gengorikai.md" >}})
+- [ことばの輪郭と図形の用語]({{< ref "post/gengorikai.md" >}})
 - 
 ただし，心理学については筆者は門外漢であることにご留意ください．
 
@@ -102,7 +100,7 @@ draft: false
 <div style="color: gray; cursor: not-allowed;">
   　　　数列の一般項の推測（公開予定）
 </div>
-</br>
+</br></br>
 <small>ちょっと気になっているトピック：</small></br>
 <small>ベクトルの成分の表記，教科書にはあるが入試には出てこない円の接線のベクトル方程式，某順問題は実際何割ぐらいの教師が固定派なのか，教科書で扱う事項や表現の変遷，「無理式」「無理関数」etc.
 </small>
