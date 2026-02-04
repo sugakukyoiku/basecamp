@@ -41,3 +41,6 @@ menu:
 - 一般社団法人 文化教育研究所 理事
 - 教材作成（テキスト，模試，入試解答）
 - 神戸大学理学部数学科 → 理学研究所数学専攻 修了
+- 数学教育学会 会員（[2023年度](https://mes-j.or.jp/files/2023_Spring_Program_03r2.pdf)，[2024年度](https://mes-j.or.jp/files/2024_Spring_Program_021.pdf)春季年会で発表）
+
+
