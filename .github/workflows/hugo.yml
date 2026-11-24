@@ -28,7 +28,7 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: 'latest'
+          hugo-version: '0.154.3'
           extended: true # ⚠️ここが重要！Stackテーマに必要な「拡張機能」をONにする
 
       - name: Build
