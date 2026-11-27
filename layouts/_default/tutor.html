@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ .Title }}</title>
+  <meta name="description" content="{{ .Description }}">
+  <!-- 限定公開（紹介カード経由のみ）にしたい場合は下の1行のコメントアウトを外してください -->
+  <!-- <meta name="robots" content="noindex, nofollow"> -->
+
+  <!-- OGP設定（LINEやSNSでURLが共有されたときの見栄え） -->
+  <meta property="og:title" content="{{ .Title }}">
+  <meta property="og:description" content="{{ .Description }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ .Permalink }}">
+
+  <!-- 上品な和文フォント（明朝体＋ゴシック体） -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-main: #FAF9F6;       /* 温かみのあるオフホワイト */
+      --bg-card: #FFFFFF;       /* カード背景 */
+      --text-main: #2C2C2C;     /* 真っ黒を避けたチャコールグレー */
+      --text-muted: #666666;    /* 補足テキスト */
+      --accent: #1E3A5F;        /* 知的なディープネイビー */
+      --accent-soft: #F0F3F7;   /* 淡いネイビー背景 */
+      --border: #E5E2DC;        /* 上品な境界線 */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
+      line-height: 1.95;
+      letter-spacing: 0.04em;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, .serif {
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+    }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ヒーローエリア */
+    header.hero {
+      padding: 100px 24px 80px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, #FFFFFF 0%, var(--bg-main) 100%);
+    }
+
+    .hero-label {
+      display: inline-block;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.22em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .hero-sublabel {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+      letter-spacing: 0.1em;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.45rem, 3.8vw, 2.1rem);
+      line-height: 1.75;
+      color: var(--text-main);
+      margin-bottom: 28px;
+      font-weight: 500;
+    }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.9;
+    }
+
+    .badge-invite {
+      display: inline-block;
+      margin-top: 28px;
+      padding: 6px 18px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      border-radius: 2px;
+    }
+
+    /* セクション共通 */
+    section {
+      padding: 76px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section:last-of-type {
+      border-bottom: none;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-en {
+      display: block;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: clamp(1.25rem, 3vw, 1.55rem);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* コンセプト */
+    .concept-text p {
+      margin-bottom: 24px;
+      font-size: 0.98rem;
+    }
+
+    .concept-text strong {
+      font-weight: 500;
+      color: var(--accent);
+      background: linear-gradient(transparent 65%, rgba(30, 58, 95, 0.1) 65%);
+    }
+
+    /* 3つの特徴 */
+    .feature-list {
+      display: grid;
+      gap: 28px;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 32px 28px;
+      border-radius: 4px;
+    }
+
+    .feature-num {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.85rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.12rem;
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+
+    .feature-card p {
+      font-size: 0.93rem;
+      color: var(--text-muted);
+    }
+
+    /* 90分の流れ（タイムライン） */
+    .timeline {
+      border-left: 1px solid var(--accent);
+      margin-left: 12px;
+      padding-left: 28px;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 32px;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -33px;
+      top: 8px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .timeline-time {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.85rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .timeline-title {
+      font-size: 1.02rem;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .timeline-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    /* フィードバック引用ボックス */
+    .feedback-box {
+      margin-top: 44px;
+      background: var(--accent-soft);
+      border-left: 3px solid var(--accent);
+      padding: 24px 26px;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .feedback-label {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.85rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .feedback-box p {
+      font-size: 0.9rem;
+      color: var(--text-main);
+      line-height: 1.85;
+    }
+
+    /* 成長グラデーション */
+    .stage-grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .stage-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 24px 26px;
+      border-radius: 4px;
+    }
+
+    .stage-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 10px;
+      border-bottom: 1px dashed var(--border);
+      padding-bottom: 8px;
+    }
+
+    .stage-age {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    .stage-ratio {
+      font-size: 0.82rem;
+      color: var(--accent);
+      background: var(--accent-soft);
+      padding: 3px 10px;
+      border-radius: 2px;
+    }
+
+    .stage-item p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    /* Q&A */
+    .qa-item {
+      margin-bottom: 28px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .qa-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .qa-q {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.02rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .qa-a {
+      font-size: 0.93rem;
+      color: var(--text-main);
+      padding-left: 26px;
+    }
+
+    /* 料金テーブル */
+    .price-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 36px 28px;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .price-limit {
+      font-size: 0.9rem;
+      color: var(--accent);
+      margin-bottom: 24px;
+      font-weight: 500;
+    }
+
+    .price-row {
+      padding: 20px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .price-row:last-of-type {
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+
+    .price-name {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+    }
+
+    .price-amount {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.45rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .price-note {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+      line-height: 1.7;
+    }
+
+    /* プロフィール */
+    .profile-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 32px 28px;
+      border-radius: 4px;
+    }
+
+    .profile-role {
+      font-size: 0.84rem;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .profile-name {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.25rem;
+      margin-bottom: 16px;
+    }
+
+    .profile-box p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    /* お問い合わせCTA */
+    .cta-section {
+      text-align: center;
+      background: #FFFFFF;
+      border-top: 1px solid var(--border);
+    }
+
+    .cta-box p {
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+
+    .cta-intro-note {
+      display: inline-block;
+      background: var(--bg-main);
+      border: 1px solid var(--border);
+      padding: 12px 20px;
+      font-size: 0.88rem;
+      margin: 12px 0 32px;
+      border-radius: 3px;
+    }
+
+    .btn-contact {
+      display: inline-block;
+      background-color: var(--accent);
+      color: #FFFFFF;
+      text-decoration: none;
+      padding: 16px 42px;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.98rem;
+      letter-spacing: 0.12em;
+      border-radius: 3px;
+      transition: opacity 0.25s ease;
+    }
+
+    .btn-contact:hover {
+      opacity: 0.85;
+    }
+
+    footer {
+      text-align: center;
+      padding: 36px 24px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+    }
+
+    footer a {
+      color: var(--text-muted);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      header.hero {
+        padding: 72px 20px 60px;
+      }
+      section {
+        padding: 56px 0;
+      }
+      .feature-card, .price-card, .profile-box {
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. ファーストビュー -->
+  <header class="hero">
+    <div class="container">
+      <span class="hero-label">Private Tutor</span>
+      <p class="hero-sublabel">幼児期からの思考力育成・大学受験までの長期伴走</p>
+      <h1>「お勉強！」と意気込まず、<br>日常の遊びから考える力の土台を育てる。</h1>
+      <p class="hero-desc">
+        大学受験指導のプロフェッショナルによる、<br>
+        ご家庭専属のプライベート・チューター
+      </p>
+      <div class="badge-invite">完全紹介制・若干名受付</div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 2. コンセプト -->
+    <section id="concept">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-en">Concept</span>
+          <h2 class="section-title">なぜ、大学受験のプロが<br>幼児期の「遊び」に関わるのか</h2>
+        </div>
+        <div class="concept-text">
+          <p>
+            はじめまして。数学教育家・プライベートチューターの［お名前］です。これまで中高生や受験生を中心に、大学受験の最前線で多くの生徒たちの思考と向き合ってまいりました。
+          </p>
+          <p>
+            受験生を指導する中で痛感するのは、<strong>「本当に伸びる子の土台は、机に向かう前の幼児期の日常で作られている」</strong>ということです。
+          </p>
+          <p>
+            幼児期に必要なのは、ドリルを何枚も解くことや、知識を早く詰め込むことではありません。積み木やカードゲーム、何気ない日常の会話の中で、お子様の現在の認知段階の<strong>「ほんの少し上」の問い</strong>に出会い、自分の頭で試行錯誤する楽しさを味わうこと。それこそが、10年後の学びを支える揺るぎない土壌になります。
+          </p>
+          <p>
+            一方で、ご家庭の日常の中で、親御様が毎回その「ちょうどよい思考の種」を仕掛け続けるのは簡単なことではありません。大切な時期だからこそ、学びを「やらされる作業」にせず、知的な遊びのまま本質的な思考力を育てたい。そして、成長に合わせてそのまま大学受験まで信頼して任せられる伴走者がほしい――。そんなご家庭のための、専属プライベート・チューターです。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 3つの特徴 -->
+    <section id="features">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-en">Features</span>
+          <h2 class="section-title">3つの特徴</h2>
+        </div>
+        <div class="feature-list">
+          <div class="feature-card">
+            <span class="feature-num">01</span>
+            <h3>大学受験から逆算した「お勉強感ゼロ」の思考力設計</h3>
+            <p>
+              大学受験で求められる論理的思考力、空間認識力、抽象化する力のゴールを知り尽くした指導者が、幼児期の認知発達に合わせて「遊び」の中に思考の仕掛けを組み込みます。机に縛り付けることなく、「気づいたら深く考えていた」という体験を積み重ねます。
+            </p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-num">02</span>
+            <h3>習い事や他教科の環境づくりまで相談できる「教育の総合参謀」</h3>
+            <p>
+              くもん、幼児教室、小学校受験、英語や国語の家庭環境づくりなど、世の中に溢れる教育選択肢の中から「今のお子様に本当に必要なもの」を中立の立場で交通整理します。親御様の良き壁打ち相手として、ご家庭の教育方針を共に設計します。
+            </p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-num">03</span>
+            <h3>幼児期から大学受験まで、先生を変えない「長期一貫伴走」</h3>
+            <p>
+              幼児期から性格や思考のクセを熟知している指導者に、小学校・中学校・高校・大学受験まで一貫して任せることができます。成長段階が変わっても、お子様の特性に合わせた最短距離のサポートを継続できます。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 90分の流れ -->
+    <section id="session">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-en">Session Flow</span>
+          <h2 class="section-title">1回90分の過ごし方（幼児期モデル）</h2>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <span class="timeline-time">00 – 15 min</span>
+            <div class="timeline-title">ウォームアップ＆観察</div>
+            <p class="timeline-desc">好きな遊びや最近の出来事の会話からスタート。その日の集中力や認知の状態を見極め、続く活動の難易度を微調整します。</p>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-time">15 – 45 min</span>
+            <div class="timeline-title">空間認識・試行錯誤の遊び</div>
+            <p class="timeline-desc">積み木、パズル、折り紙などの具体物を使い、仮説と検証を繰り返す「少し背伸びが必要な課題」に遊び感覚で取り組みます。</p>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-time">45 – 60 min</span>
+            <div class="timeline-title">論理・言語化・数理ゲーム</div>
+            <p class="timeline-desc">カードゲームやボードゲーム、日常の買い物ごっこなどを通じて、ルール理解や条件整理、「どうしてそう思ったか」を自分の言葉で説明する力を養います。</p>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-time">60 – 75 min</span>
+            <div class="timeline-title">クールダウン＆振り返り</div>
+            <p class="timeline-desc">その日うまくいったことをお子様自身が先生役になって再現・説明し、達成感とともに記憶を定着させます。</p>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-time">75 – 90 min</span>
+            <div class="timeline-title">保護者様へのフィードバック</div>
+            <p class="timeline-desc">その日の思考の伸びや認知のクセ、将来の学びへのつながりをお伝えし、ご家庭での声かけのヒントを共有します。</p>
+          </div>
+        </div>
+
+        <div class="feedback-box">
+          <span class="feedback-label">保護者様へのフィードバック例</span>
+          <p>
+            「今日は形や並べ方を変えても数が変わらない『保存の概念』を確かめる遊びをしました。最初は見た目の大きさに引っ張られていましたが、1対1で並べて比べたことで『あ、一緒だ！』とご自身で気づかれました。この『見た目の印象ではなく構造で判断する力』は、将来の文章題や図形問題で本質を見抜く力の土台になります。」
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. 成長グラデーション -->
+    <section id="roadmap">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-en">Long-Term Roadmap</span>
+          <h2 class="section-title">成長に合わせた伴走のグラデーション</h2>
+        </div>
+        <div class="stage-grid">
+          <div class="stage-item">
+            <div class="stage-header">
+              <span class="stage-age">幼児期（3〜6歳）</span>
+              <span class="stage-ratio">思考の遊び・対話 100%</span>
+            </div>
+            <p>机に向かわず、遊びと対話を通じて認知・数理・言語化の土台を育みます。</p>
+          </div>
+          <div class="stage-item">
+            <div class="stage-header">
+              <span class="stage-age">小学校低〜中学年</span>
+              <span class="stage-ratio">思考の遊び 60% ： 教科学習 40%</span>
+            </div>
+            <p>学校の算数・国語が始まる時期に合わせ、つまずきやすい単元の本質理解と、思考を深める遊びをバランスよく組み合わせます。中学受験塾のフォローにも対応します。</p>
+          </div>
+          <div class="stage-item">
+            <div class="stage-header">
+              <span class="stage-age">小学校高学年〜中学生</span>
+              <span class="stage-ratio">教科学習 80% ： 学習設計 20%</span>
+            </div>
+            <p>中学受験・高校受験・定期テストを見据え、幼児期から培った思考力を武器に本質的な理解と自学自習の型を確立します。</p>
+          </div>
+          <div class="stage-item">
+            <div class="stage-header">
+              <span class="stage-age">高校生〜大学受験</span>
+              <span class="stage-ratio">大学受験指導 90% ： 戦略・メンタル伴走 10%</span>
+            </div>
+            <p>大学受験のプロ講師として、志望校合格に向けた数学指導および学習戦略を一貫して担います。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Q&A -->
+    <section id="faq">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-en">Q &amp; A</span>
+          <h2 class="section-title">よくあるご質問</h2>
+        </div>
+        <div class="qa-item">
+          <div class="qa-q"><span>Q.</span><span>ひらがなや計算の先取りは教えてもらえますか？</span></div>
+          <p class="qa-a">無理な先取りや反復ドリルは原則行いませんが、遊びや日常の会話の中で自然に数や文字の仕組みに触れる機会を作ります。まずは「自分で考える楽しさ」を優先し、お子様自身が興味を持ったタイミングで無理なく定着へつなげます。</p>
+        </div>
+        <div class="qa-item">
+          <div class="qa-q"><span>Q.</span><span>英語や国語、他の習い事についても相談できますか？</span></div>
+          <p class="qa-a">はい。直接の指導は思考力・数理感覚・論理的言語化を中心に行いますが、母語（日本語）の論理力の育て方や、早期英語との付き合い方、くもん・幼児教室・受験塾の選び方など、教育全体の交通整理もセッション内のフィードバックやご相談にて承ります。</p>
+        </div>
+        <div class="qa-item">
+          <div class="qa-q"><span>Q.</span><span>セッション中、保護者が外出しても大丈夫ですか？</span></div>
+          <p class="qa-a">原則として保護者様のご在宅をお願いしておりますが、事前のご連絡により、セッション時間中の短時間の外出（見守り対応）や前後時間の延長見守りにも柔軟に対応しております。（※訪問型保育の届出および賠償責任保険に加入済みです）</p>
+        </div>
+        <div class="qa-item">
+          <div class="qa-q"><span>Q.</span><span>対象年齢は何歳からですか？</span></div>
+          <p class="qa-a">言葉でのやり取りや簡単なルールのある遊びが成立する3歳（年少）頃を目安としております。小学校低学年からのスタートも歓迎です。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. 料金 -->
+    <section id="fee">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-en">Fee &amp; Availability</span>
+          <h2 class="section-title">料金・ご案内枠について</h2>
+        </div>
+        <div class="price-card">
+          <p class="price-limit">
+            お一人おひとりのご家庭と深く長期的に向き合うため、<br>
+            新規でお引き受けできるご家庭数を限定（現在：若干名）とさせていただいております。
+          </p>
+          <div class="price-row">
+            <div class="price-name">基本セッション（1回 90分）</div>
+            <div class="price-amount">15,000円<span style="font-size: 0.85rem; font-weight: 400;">（税込）</span></div>
+            <p class="price-note">
+              時間単価は幼児期から大学受験まで全学年一律 10,000円／時 です。<br>
+              別途、自宅からの往復交通費実費を頂戴いたします。
+            </p>
+          </div>
+          <div class="price-row">
+            <div class="price-name">初回面談・体験セッション（90分）</div>
+            <div class="price-amount">15,000円<span style="font-size: 0.85rem; font-weight: 400;">（税込）＋交通費</span></div>
+            <p class="price-note">
+              保護者様へのヒアリング（約20分）＋ お子様との体験遊び・フィードバック（約70分）
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. プロフィール -->
+    <section id="profile">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-en">Profile</span>
+          <h2 class="section-title">プロフィール</h2>
+        </div>
+        <div class="profile-box">
+          <div class="profile-role">数学教育家 ／ プライベート・チューター</div>
+          <div class="profile-name">［お名前］</div>
+          <p>
+            中高一貫校・予備校・個別指導の現場にて、中学生から高校生・大学受験生まで幅広く数学を指導。大学入試問題の解説執筆や参考書制作にも携わる。「感覚や暗記に頼らず、誰でも論理的に思考を組み立てられる再現性のある指導」を信条とし、その原点を育むべく幼児期からの長期伴走チューターとしての活動を開始。京都府在住。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. お問い合わせ -->
+    <section id="contact" class="cta-section">
+      <div class="container cta-box">
+        <div class="section-header" style="margin-bottom: 28px;">
+          <span class="section-en">Contact</span>
+          <h2 class="section-title">初回面談・体験セッションのご案内</h2>
+        </div>
+        <p>
+          まずは初回面談・体験セッションにて、お子様のご様子やご家庭の教育方針をお聞かせください。<br>
+          お互いに長期的なパートナーとして歩めるかを確認させていただいたうえで、今後の進め方をご提案いたします。
+        </p>
+        <div class="cta-intro-note">
+          ご紹介者様がいらっしゃる場合は、お問い合わせ欄に<br>
+          <strong>「〇〇様からのご紹介」</strong>とご記入ください。
+        </div>
+        <div>
+          <!-- ご自身のGoogleフォームや公式LINEのURLに差し替えてください -->
+          <a href="https://example.com" target="_blank" rel="noopener noreferrer" class="btn-contact">
+            初回面談・体験を申し込む
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; {{ now.Format "2006" }} ［お名前］ Private Tutor. All Rights Reserved.</p>
+    <p style="margin-top: 8px;"><a href="{{ .Site.BaseURL }}">トップページへ戻る</a></p>
+  </footer>
+
+</body>
+</html>
